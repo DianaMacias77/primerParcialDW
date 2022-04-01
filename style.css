@@ -1,0 +1,115 @@
+h1 {
+  text-align: center;
+}
+
+.p {
+  align-content: center;
+  text-align: center;
+}
+
+.btn {
+  background-color: #F48225;
+}
+
+.forgotPassword {
+  text-align: center;
+}
+
+img {
+  border-radius: 20;
+  float: right;
+  height: 600px;
+  width: 500px;
+}
+
+.left {
+  text-align: left;
+}
+
+.botonPlus {
+  align-content: right;
+  text-align: right;
+}
+
+.contact_form {
+  border-radius: 10px;
+  background-color: grey;
+  height: auto;
+  margin: 80px auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  text-align: center;
+  width: 460px;
+}
+
+.maestro {
+  border-radius: 8px;
+  float: right;
+  height: 400px;
+  width: 400px;
+}
+
+.nino {
+  border-radius: 8px;
+  float: right;
+  height: 400px;
+  width: 400px;
+}
+
+.alert {
+  background-color: grey;
+  color: white;
+  margin-bottom: 15px;
+  padding: 20px;
+}
+
+.closebtn {
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+}
+
+.column {
+  float: left;
+  padding: 0 10px;
+  width: 30%;
+}
+
+.row {
+  margin: 0 -15px;
+}
+
+.row:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.delete {
+  height: 50px;
+  width: 50px;
+}
+
+.iframe {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+/*# sourceMappingURL=style.css.map */
