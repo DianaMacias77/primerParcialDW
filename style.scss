@@ -1,6 +1,12 @@
+@import 'head-foot';
 $central: center;
 $derecha: right;
 $colorEscuela: #F48225;
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
 
 h1{
     text-align: $central;
@@ -17,13 +23,6 @@ h1{
 
 .forgotPassword{
     text-align: $central;
-}
-
-img{
-    border-radius: 20;
-    float:right;
-    height:600px;
-    width:500px;
 }
 
 .left{

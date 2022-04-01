@@ -1,3 +1,54 @@
+@media (max-width: 576px) {
+  .navbar {
+    position: relative;
+    padding-top: 90px;
+    display: contents;
+  }
+
+  .breadcrumb-item.active {
+    padding-left: 0px;
+  }
+
+  footer {
+    background-color: mediumpurple;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+  }
+
+  img {
+    width: 200px;
+    height: 500px;
+    display: block;
+    margin: auto;
+  }
+}
+@media (min-width: 576px) and (max-width: 2000px) {
+  header {
+    width: auto;
+    height: 100px;
+  }
+
+  img {
+    width: 200px;
+    height: auto;
+    float: left;
+  }
+
+  footer {
+    background-color: mediumpurple;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    min-height: 50px;
+  }
+}
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 h1 {
   text-align: center;
 }
@@ -13,13 +64,6 @@ h1 {
 
 .forgotPassword {
   text-align: center;
-}
-
-img {
-  border-radius: 20;
-  float: right;
-  height: 600px;
-  width: 500px;
 }
 
 .left {
