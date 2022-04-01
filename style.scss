@@ -1,3 +1,4 @@
+@use "sass:math";
 @import 'head-foot';
 $central: center;
 $derecha: right;
@@ -113,5 +114,16 @@ h1{
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+}
+@mixin tema($variable: red) {
+    background: $variable;
+}
+.ribbon {
+    font-size: 16px !important;
+    width: 10%;
+    position: relative;
+    @include tema;
+    color: #fff;
+    text-align: center;
 }
 
