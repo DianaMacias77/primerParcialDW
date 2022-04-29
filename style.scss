@@ -3,6 +3,9 @@
 $central: center;
 $derecha: right;
 $colorEscuela: #F48225;
+$pantalla-telefono: 576px;
+$pantalla-compu: 2000px;
+$pantalla-tablet: 768px;
 
 body {
     display: grid;
@@ -105,11 +108,6 @@ h1{
     display: table;
 }
 
-.delete{
-    height:50px;
-    width:50px;
-}
-
 .iframe{
     margin-left: auto;
     margin-right: auto;
@@ -126,4 +124,65 @@ h1{
     color: #fff;
     text-align: center;
 }
+
+@media (max-width: $pantalla-telefono) {
+    .card{
+        width: 100%;
+    }
+
+    iframe{
+        width:100%;
+    }
+
+    .contact_form{
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .d-block w-100{
+        min-width:50%;
+        position: absolute;
+    }
+
+    .column{
+        width:100%;
+    }
+}
+
+
+@media (max-width: $pantalla-tablet) {
+    .card{
+        width: 100%;
+    }
+
+    iframe{
+        width:100%;
+    }
+
+    .d-block w-100{
+        min-width:100%;
+        position: absolute;
+    }
+}
+
+@media (min-width: $pantalla-telefono) and (max-width: $pantalla-compu) {
+    .card{
+        width: 100%;
+    }
+
+    iframe{
+        width:100%;
+    }
+
+    .d-block w-100{
+        width:20%;
+        position: absolute;
+    }
+
+    .column{
+        width:100%;
+    }
+}
+
+
 
