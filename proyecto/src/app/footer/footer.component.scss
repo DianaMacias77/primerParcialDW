@@ -1,0 +1,47 @@
+$position: left;
+$pantalla-telefono: 576px;
+$pantalla-compu: 2000px;
+$color: mediumpurple;
+@media (max-width: $pantalla-telefono) {
+	.breadcrumb-item.active {
+		padding-left: 0px;
+	}
+	footer {
+		background-color: $color;
+		bottom: 0;
+		width: 100%;
+		height: 50px;
+		position: fixed;
+		text-align: center;
+	}
+	img{
+		width: 200px;
+		height: 200px;
+		display: block;
+		margin: auto;
+	}
+}
+@media (min-width: $pantalla-telefono) and (max-width: $pantalla-compu) {
+	header {
+		width: auto;
+		height: 100px;
+	}
+
+	img {
+		width: 200px;
+		height: auto;
+		float: $position;
+	}
+
+	footer {
+		background-color: $color;
+		bottom: 0;
+		width: 100%;
+		height: 50px;
+		min-height: 50px;
+		text-align: center;
+		position: fixed;
+
+	}
+
+}
