@@ -1,0 +1,138 @@
+<div class="contact_form">
+  <div class="formulario">
+      <h1>Formulario de contacto</h1>
+      <p>Escríbenos y en breve nos pondremos en contacto contigo</p>
+      <form action="submeter-formulario.php" method="post">
+          <p>
+              <label for="nombre" class="colocar_nombre">
+                  Nombre
+                  <span class="text-danger">*</span>
+              </label>
+              <input type="text" name="introducir_nombre" id="nombre" required placeholder="Escribe tu nombre">
+          </p>
+
+          <p>
+              <label for="email" class="colocar_email">
+                  Email
+                  <span class="text-danger">*</span>
+              </label>
+              <input type="email" name="introducir_email" id="email" required placeholder="Escribe tu Email">
+          </p>
+
+          <p>
+              <label for="telephone" class="colocar_telefono">Teléfono</label>
+              <input type="tel" name="introducir_telefono" id="telephone" placeholder="Escribe tu teléfono">
+          </p>
+
+          <p>
+              <label for="asunto" class="colocar_asunto">Asunto</label>
+              <input type="text" name="introducir_asunto" id="asunto" placeholder="Escribe un asunto">
+          </p>
+
+          <p>
+              <label for="mensaje" class="colocar_mensaje">Mensaje</label>
+              <textarea name="introducir_mensaje" class="texto_mensaje" id="mensaje" placeholder="Deja aquí tu comentario..."></textarea>
+          </p>
+
+          <button type="submit" name="enviar_formulario" id="enviar">Enviar</button>
+
+          <p class="aviso">
+              <span class="text-danger"> * los campos son obligatorios. </span>
+          </p>
+      </form>
+  </div>
+</div>
+<table class="tableContacto">
+  <thead>
+      <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Email</th>
+          <th scope="col">Teléfono</th>
+          <th scope="col">Asunto</th>
+          <th scope="col">Mensaje</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <th scope="row">1</th>
+          <td>Daniela</td>
+          <td>danber@gmail.com</td>
+          <td>5543218764</td>
+          <td>Duda</td>
+          <td>Quisiera inscribirme, como le hago?</td>
+      </tr>
+      <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>jacobAug@gmail.com</td>
+          <td></td>
+          <td></td>
+          <td>Quiero que mi sobrino entre, como funciona?</td>
+      </tr>
+      <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>larJA@gmail.com</td>
+          <td>7772389514</td>
+          <td>Duda material</td>
+          <td>Disculpen, que pasa si en el video pide un material que no tenemos?</td>
+      </tr>
+      <tr>
+          <th scope="row">4</th>
+          <td>Juan</td>
+          <td>jcomb@gmail.com</td>
+          <td>5398612533</td>
+          <td>Colaborar</td>
+          <td>Puedo colaborar con ustedes?</td>
+      </tr>
+      <tr>
+          <th scope="row">5</th>
+          <td>José</td>
+          <td>joseman@gmail.com</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <th scope="row">6</th>
+          <td>Franco</td>
+          <td>franesc@gmail.com</td>
+          <td></td>
+          <td>Agradecimiento</td>
+          <td>Los videos que ponen en matemáticas me gustan mucho, gracias</td>
+      </tr>
+      <tr>
+          <th scope="row">7</th>
+          <td>Beatriz</td>
+          <td>betysolano@gmail.com</td>
+          <td>5610520543</td>
+          <td>Apoyo</td>
+          <td>Quisiera poder compartir mis videos, ¿como puedo hacerlo?</td>
+      </tr>
+      <tr>
+          <th scope="row">8</th>
+          <td>Karen</td>
+          <td>krma@gmail.com</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <th scope="row">9</th>
+          <td>Sonia</td>
+          <td>sonia1984@gmail.com</td>
+          <td>5543210057</td>
+          <td>No entiendo</td>
+          <td>No se como acceder al sitio</td>
+      </tr>
+      <tr>
+          <th scope="row">10</th>
+          <td>Diana</td>
+          <td>dpma@gmail.com</td>
+          <td></td>
+          <td>Invitación</td>
+          <td>Me gustaria invitar a los colaboradores a un evento</td>
+      </tr>
+  </tbody>
+</table>
