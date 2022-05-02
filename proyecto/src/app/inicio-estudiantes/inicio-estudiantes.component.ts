@@ -13,3 +13,7 @@ export class InicioEstudiantesComponent implements OnInit {
   }
 
 }
+
+export class NgbdCarouselBasic{
+
+}

@@ -1,0 +1,25 @@
+$pantalla-telefono: 576px;
+$pantalla-compu: 2000px;
+$pantalla-tablet: 768px;
+
+@media (max-width: $pantalla-telefono) {
+  iframe{
+      width:100%;
+  }
+}
+
+
+@media (max-width: $pantalla-tablet) {
+  iframe{
+      width:100%;
+  }
+}
+
+@media (min-width: $pantalla-telefono) and (max-width: $pantalla-compu) {
+  iframe{
+      width:100%;
+  }
+}
+
+
+
