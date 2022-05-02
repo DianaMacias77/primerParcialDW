@@ -1,0 +1,26 @@
+$pantalla-telefono: 576px;
+$pantalla-compu: 2000px;
+$pantalla-tablet: 768px;
+
+@media (max-width: $pantalla-telefono) {
+
+  .d-block w-100{
+      min-width:50%;
+      position: absolute;
+  }
+}
+
+
+@media (max-width: $pantalla-tablet) {
+  .d-block w-100{
+      min-width:100%;
+      position: absolute;
+  }
+}
+
+@media (min-width: $pantalla-telefono) and (max-width: $pantalla-compu) {
+  .d-block w-100{
+      width:20%;
+      position: absolute;
+  }
+}

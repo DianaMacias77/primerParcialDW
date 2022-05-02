@@ -10,6 +10,9 @@ import { InicioProfesorComponent } from './inicio-profesor/inicio-profesor.compo
 import { AcercaDeProfesorComponent } from './acerca-de-profesor/acerca-de-profesor.component';
 import { PublicacionesProfesorComponent } from './publicaciones-profesor/publicaciones-profesor.component';
 import { ContactanosComponent } from './contactanos/contactanos.component';
+import { InicioEstudiantesComponent } from './inicio-estudiantes/inicio-estudiantes.component';
+import { AcercaDeEstudianteComponent } from './acerca-de-estudiante/acerca-de-estudiante.component';
+import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/publicaciones-estudiante.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { ContactanosComponent } from './contactanos/contactanos.component';
     InicioProfesorComponent,
     AcercaDeProfesorComponent,
     PublicacionesProfesorComponent,
-    ContactanosComponent
+    ContactanosComponent,
+    InicioEstudiantesComponent,
+    AcercaDeEstudianteComponent,
+    PublicacionesEstudianteComponent
   ],
   imports: [
     BrowserModule,
