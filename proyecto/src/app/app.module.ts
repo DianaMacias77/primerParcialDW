@@ -13,6 +13,7 @@ import { ContactanosComponent } from './contactanos/contactanos.component';
 import { InicioEstudiantesComponent } from './inicio-estudiantes/inicio-estudiantes.component';
 import { AcercaDeEstudianteComponent } from './acerca-de-estudiante/acerca-de-estudiante.component';
 import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/publicaciones-estudiante.component';
+import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,10 @@ import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/pub
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
