@@ -1,0 +1,44 @@
+$position: left;
+$pantalla-telefono: 576px;
+$pantalla-compu: 2000px;
+$color: mediumpurple;
+@media (max-width: $pantalla-telefono) {
+	.navbar {
+		position: relative;
+		padding-top: 90px;
+		display: contents;
+	}
+	.breadcrumb-item.active {
+		padding-left: 0px;
+	}
+	.img{
+		width: 150px;
+		height: 150px;
+		display: block;
+		margin: auto;
+	}
+}
+@media (min-width: $pantalla-telefono) and (max-width: $pantalla-compu) {
+	header {
+		width: auto;
+		height: 100px;
+	}
+
+	.img {
+		width: 200px;
+		height: auto;
+		float: $position;
+	}
+}
+
+@mixin tema($variable: red) {
+  background: $variable;
+}
+.ribbon {
+  font-size: 16px !important;
+  width: 10%;
+  position: relative;
+  @include tema;
+  color: #fff;
+  text-align: center;
+}

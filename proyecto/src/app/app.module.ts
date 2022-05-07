@@ -14,6 +14,10 @@ import { InicioEstudiantesComponent } from './inicio-estudiantes/inicio-estudian
 import { AcercaDeEstudianteComponent } from './acerca-de-estudiante/acerca-de-estudiante.component';
 import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/publicaciones-estudiante.component';
 import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NavbarEstudiantesComponent } from './navbar-estudiantes/navbar-estudiantes.component';
+import { AdministradorComponent } from './administrador/administrador.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -27,14 +31,21 @@ import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-b
     ContactanosComponent,
     InicioEstudiantesComponent,
     AcercaDeEstudianteComponent,
-    PublicacionesEstudianteComponent
+    PublicacionesEstudianteComponent,
+    NavbarEstudiantesComponent,
+    AdministradorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbPaginationModule,
     NgbAlertModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule,
+    AuthModule.forRoot({
+      domain: 'dev-5xxxigo6.us.auth0.com',
+      clientId: 'rEmx9LLI3P05OOww7EUCrPSiGdf7dFVJ'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
