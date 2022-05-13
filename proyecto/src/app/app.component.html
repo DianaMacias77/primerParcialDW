@@ -1,6 +1,8 @@
-<app-navbar></app-navbar>
-<!--<app-navbar-estudiantes></app-navbar-estudiantes>-->
+
+<app-navbar *ngIf="showNav()"></app-navbar>
+<app-navbar-estudiantes *ngIf="showNavE()"></app-navbar-estudiantes>
 <router-outlet></router-outlet>
+
 <!--<app-index></app-index>-->
 <!--<app-inicio-profesor></app-inicio-profesor>-->
 <!--<app-acerca-de-profesor></app-acerca-de-profesor>-->

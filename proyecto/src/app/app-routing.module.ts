@@ -13,7 +13,7 @@ import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/pub
 import { AdministradorComponent } from './administrador/administrador.component';
 
 const routes: Routes = [
-  { path: 'app-index', component: IndexComponent, canActivate: [AuthGuard],},
+  { path: 'app-index', component: IndexComponent, canActivate: [AuthGuard],data: { animation: 'NavBar' }},
   { path: 'acerca-estudiante', component: AcercaDeEstudianteComponent},
   { path: 'acerca-profesor', component: AcercaDeProfesorComponent},
   { path: 'inicio-profesor', component: InicioProfesorComponent},
