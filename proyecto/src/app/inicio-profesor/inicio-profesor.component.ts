@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inicio-profesor',
@@ -9,8 +10,15 @@ import { Component, OnInit } from '@angular/core';
   `
 })
 export class InicioProfesorComponent implements OnInit {
-valor = false;
-  constructor() { }
+  @Input() valor:any;
+  sub
+  constructor(private _Activatedroute: ActivatedRoute,
+    private _router: Router) {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      console.log(params);
+      this.valor = params.get(this.valor);
+    });
+  }
 
   ngOnInit(): void {
   }

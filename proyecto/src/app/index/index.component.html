@@ -1,4 +1,4 @@
-<div class="Login">
+<div class="Login" >
   <h1>Registrate</h1>
   <p>Agrega tus datos y elige la opción que corresponda al tipo de ususario que eres (maestro o estudiante)</p>
   <form>
@@ -13,27 +13,22 @@
           <input type="password" id="form2Example2" class="form-control" />
           <label class="form-label" for="form2Example2">Contraseña</label>
       </div>
-
-      <div class="d-flex justify-content-between align-items-center">
           <!-- Checkbox -->
-          <div class="form-check mb-0">
-              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-              <label class="form-check-label" for="form2Example3">Profesor</label>
+          <div *ngFor="let option of options">
+            <i>{{option}}</i>
+            <input type="radio"
+            name="op"
+            value={{option}}
+            (change)="handlerControl($event)"
+            />
           </div>
-      </div>
-      <div class="d-flex justify-content-between align-items-center">
-          <div class="form-check mb-0">
-              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example4" />
-              <label class="form-check-label" for="form2Example3">Alumno</label>
-          </div>
-      </div>
       <br>
       <!-- Submit button -->
-      <button type="button" class="btn btn-primary btn-block mb-4" onclick="location.href='/inicio-profesor'">Registrate</button>
-
+      <button type="button" class="btn btn-primary btn-block mb-4" (click)="changeP()"><i class="fa fa-plus"></i>Registrate</button>
       <div class="forgotPassword">
-          <a href="#!">¿Olidaste tu contraseña?</a>
+          <a href="#!">¿Olvidaste tu contraseña?</a>
       </div>
+
   </form>
 </div>
 <br>

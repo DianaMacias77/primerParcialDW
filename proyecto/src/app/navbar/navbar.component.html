@@ -28,6 +28,13 @@
                              placeholder="Search"
                              aria-label="Search" />
                   </li>
+                  <li>
+                    <app-login-button *ngIf="(auth.isAuthenticated$ | async) === false"></app-login-button>
+                  </li>
+                  <li>
+                    <app-logout-button *ngIf="auth.isAuthenticated$ | async"></app-logout-button>
+                  </li>
+
               </ol>
           </nav>
       </div>

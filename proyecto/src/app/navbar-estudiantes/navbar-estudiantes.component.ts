@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 import {
   trigger,
   state,
@@ -68,7 +69,7 @@ import {
 })
 export class NavbarEstudiantesComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
   }

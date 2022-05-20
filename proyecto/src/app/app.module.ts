@@ -19,6 +19,10 @@ import { NavbarEstudiantesComponent } from './navbar-estudiantes/navbar-estudian
 import { AdministradorComponent } from './administrador/administrador.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthModule } from '@auth0/auth0-angular';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '@auth0/auth0-angular';
+import { LoginButtonComponent } from './login-button/login-button.component';
+import { LogoutButtonComponent } from './logout-button/logout-button.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { AuthModule } from '@auth0/auth0-angular';
     AcercaDeEstudianteComponent,
     PublicacionesEstudianteComponent,
     NavbarEstudiantesComponent,
-    AdministradorComponent
+    AdministradorComponent,
+    LoginButtonComponent,
+    LogoutButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +50,7 @@ import { AuthModule } from '@auth0/auth0-angular';
     NgbAlertModule,
     NgbModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-5xxxigo6.us.auth0.com',
       clientId: 'rEmx9LLI3P05OOww7EUCrPSiGdf7dFVJ'

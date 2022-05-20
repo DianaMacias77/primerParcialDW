@@ -13,12 +13,12 @@ import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/pub
 import { AdministradorComponent } from './administrador/administrador.component';
 
 const routes: Routes = [
-  { path: 'app-index', component: IndexComponent, canActivate: [AuthGuard],data: { animation: 'NavBar' }},
+  { path: 'app-index', component: IndexComponent, canActivate: [AuthGuard]},
   { path: 'acerca-estudiante', component: AcercaDeEstudianteComponent},
   { path: 'acerca-profesor', component: AcercaDeProfesorComponent},
   { path: 'inicio-profesor', component: InicioProfesorComponent},
-  { path: 'inicio-estudiante', component: InicioEstudiantesComponent},
-  { path: 'publicaciones-estudiante', component: PublicacionesEstudianteComponent},
+  { path: 'inicio-estudiante', component: InicioEstudiantesComponent,data: { animation: 'InicioEs' }},
+  { path: 'publicaciones-estudiante', component: PublicacionesEstudianteComponent,data: { animation: 'PublicaEs' }},
   { path: 'publicaciones-profesor', component: PublicacionesProfesorComponent},
   { path: 'administrador', component: AdministradorComponent},
   { path: 'contactanos', component: ContactanosComponent},
