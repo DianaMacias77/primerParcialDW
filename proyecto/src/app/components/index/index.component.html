@@ -1,3 +1,4 @@
+<br>
 <div class="Login">
   <h1>Registrate</h1>
   <p>Agrega tus datos y elige la opción que corresponda al tipo de ususario que eres (maestro o estudiante)</p>
@@ -14,17 +15,17 @@
           <label class="form-label" for="form2Example2">Contraseña</label>
       </div>
           <!-- Checkbox -->
-          <div *ngFor="let option of options">
-            <i>{{option}}</i>
+          <div *ngFor="let opcion of opciones">
+            <i>{{opcion}}</i>
             <input type="radio"
             name="op"
-            value={{option}}
-            (change)="handlerControl($event)"
+            value={{opcion}}
+            (change)=" obtenValor($event)"
             />
           </div>
       <br>
       <!-- Submit button -->
-      <button type="button" class="btn btn-primary btn-block mb-4" (click)="changeP()"><i class="fa fa-plus"></i>Registrate</button>
+      <button type="button" class="btn btn-primary btn-block mb-4" (click)="dirigiraMenu()"><i class="fa fa-plus"></i>Registrate</button>
       <div class="forgotPassword">
           <a href="#!">¿Olvidaste tu contraseña?</a>
       </div>

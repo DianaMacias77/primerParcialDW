@@ -1,9 +1,5 @@
 import { Component,OnInit,EventEmitter,Output} from '@angular/core';
-import { FormControl,FormGroup } from '@angular/forms';
-import { Router,RouterModule } from '@angular/router';
-
-declare const Buffer;
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -13,11 +9,11 @@ declare const Buffer;
 })
 export class IndexComponent implements OnInit {
   eleccion:string = '';
-  options:any= [
+  opciones:any= [
     'Profesor',
     'Alumno'
   ];
-  handlerControl(event:any){
+  obtenValor(event:any){
     this.eleccion=event.target.value;
 
   }
@@ -27,7 +23,7 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  changeP(){
+  dirigiraMenu(){
     console.log(this.eleccion)
     if(this.eleccion=="Profesor"){
       this.pasarValor.emit(this.eleccion);

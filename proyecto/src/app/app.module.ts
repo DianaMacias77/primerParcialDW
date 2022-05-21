@@ -4,25 +4,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { IndexComponent } from './index/index.component';
-import { InicioProfesorComponent } from './inicio-profesor/inicio-profesor.component';
-import { AcercaDeProfesorComponent } from './acerca-de-profesor/acerca-de-profesor.component';
-import { PublicacionesProfesorComponent } from './publicaciones-profesor/publicaciones-profesor.component';
-import { ContactanosComponent } from './contactanos/contactanos.component';
-import { InicioEstudiantesComponent } from './inicio-estudiantes/inicio-estudiantes.component';
-import { AcercaDeEstudianteComponent } from './acerca-de-estudiante/acerca-de-estudiante.component';
-import { PublicacionesEstudianteComponent } from './publicaciones-estudiante/publicaciones-estudiante.component';
+import { NavbarComponent } from './components/profesor/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { IndexComponent } from './components/index/index.component';
+import { InicioProfesorComponent } from './components/profesor/inicio-profesor/inicio-profesor.component';
+import { AcercaDeProfesorComponent } from './components/profesor/acerca-de-profesor/acerca-de-profesor.component';
+import { PublicacionesProfesorComponent } from './components/profesor/publicaciones-profesor/publicaciones-profesor.component';
+import { ContactanosComponent } from './components/contactanos/contactanos.component';
+import { InicioEstudiantesComponent } from './components/alumno/inicio-estudiantes/inicio-estudiantes.component';
+import { AcercaDeEstudianteComponent } from './components/alumno/acerca-de-estudiante/acerca-de-estudiante.component';
+import { PublicacionesEstudianteComponent } from './components/alumno/publicaciones-estudiante/publicaciones-estudiante.component';
 import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NavbarEstudiantesComponent } from './navbar-estudiantes/navbar-estudiantes.component';
-import { AdministradorComponent } from './administrador/administrador.component';
+import { NavbarEstudiantesComponent } from './components/alumno/navbar-estudiantes/navbar-estudiantes.component';
+import { AdministradorComponent } from './components/administrador/administrador.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthModule } from '@auth0/auth0-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
-import { LoginButtonComponent } from './login-button/login-button.component';
-import { LogoutButtonComponent } from './logout-button/logout-button.component';
+import { LoginButtonComponent } from './components/login-button/login-button.component';
+import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 
 @NgModule({
   declarations: [
