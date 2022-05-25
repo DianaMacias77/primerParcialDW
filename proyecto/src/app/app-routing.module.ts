@@ -11,20 +11,29 @@ import { ContactanosComponent } from './components/contactanos/contactanos.compo
 import { InicioEstudiantesComponent } from './components/alumno/inicio-estudiantes/inicio-estudiantes.component';
 import { PublicacionesEstudianteComponent } from './components/alumno/publicaciones-estudiante/publicaciones-estudiante.component';
 import { AdministradorComponent } from './components/administrador/administrador.component';
+import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
+import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
 
 const routes: Routes = [
   { path: 'app-index', component: IndexComponent, canActivate: [AuthGuard]},
-  { path: 'acerca-estudiante', component: AcercaDeEstudianteComponent},
-  { path: 'acerca-profesor', component: AcercaDeProfesorComponent},
-  { path: 'inicio-profesor', component: InicioProfesorComponent},
-  { path: 'inicio-estudiante', component: InicioEstudiantesComponent,data: { animation: 'InicioEs' }},
-  { path: 'publicaciones-estudiante', component: PublicacionesEstudianteComponent,data: { animation: 'PublicaEs' }},
-  { path: 'publicaciones-profesor', component: PublicacionesProfesorComponent},
+  { path: 'profesor', component:ProfesorComponent,
+    children:[
+      { path: 'acerca-profesor', component: AcercaDeProfesorComponent},
+      { path: 'inicio-profesor', component: InicioProfesorComponent},
+      { path: 'publicaciones-profesor', component: PublicacionesProfesorComponent},
+      { path: 'contactanos', component: ContactanosComponent},
+      { path: '', component: InicioProfesorComponent}
+    ]},
+  { path: 'alumno', component:AlumnoComponent,
+    children:[
+      { path: 'acerca-estudiante', component: AcercaDeEstudianteComponent},
+      { path: 'inicio-estudiante', component: InicioEstudiantesComponent,data: { animation: 'InicioEs' }},
+      { path: 'publicaciones-estudiante', component: PublicacionesEstudianteComponent,data: { animation: 'PublicaEs' }},
+      { path: 'contactanos', component: ContactanosComponent},
+      { path: '', component: InicioEstudiantesComponent}
+    ]},
   { path: 'administrador', component: AdministradorComponent},
-  { path: 'contactanos', component: ContactanosComponent},
   { path: '', component: IndexComponent}
-
-
 ];
 
 @NgModule({

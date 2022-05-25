@@ -23,6 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { LoginButtonComponent } from './components/login-button/login-button.component';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
+import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
+import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { LogoutButtonComponent } from './components/logout-button/logout-button.
     NavbarEstudiantesComponent,
     AdministradorComponent,
     LoginButtonComponent,
-    LogoutButtonComponent
+    LogoutButtonComponent,
+    AlumnoComponent,
+    ProfesorComponent
   ],
   imports: [
     BrowserModule,

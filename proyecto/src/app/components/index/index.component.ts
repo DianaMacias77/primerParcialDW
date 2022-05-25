@@ -27,11 +27,11 @@ export class IndexComponent implements OnInit {
     console.log(this.eleccion)
     if(this.eleccion=="Profesor"){
       this.pasarValor.emit(this.eleccion);
-      this.router.navigateByUrl('/inicio-profesor');
+      this.router.navigateByUrl('/profesor');
     }
     if( this.eleccion=="Alumno"){
       this.pasarValor.emit(this.eleccion);
-      this.router.navigateByUrl('/inicio-estudiante');
+      this.router.navigateByUrl('/alumno');
     }
   }
 

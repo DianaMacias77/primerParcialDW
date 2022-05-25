@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit,Input } from '@angular/core';
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, OnInit,Input } from '@angular/core';
 })
 export class InicioProfesorComponent implements OnInit {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
+  }
+  direccion(){
+    this.router.navigateByUrl('/profesor/publicaciones-profesor');
   }
 
 }
