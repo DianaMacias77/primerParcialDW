@@ -15,8 +15,8 @@ import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
 
 const routes: Routes = [
-  { path: 'app-index', component: IndexComponent, canActivate: [AuthGuard]},
-  { path: 'profesor', component:ProfesorComponent,
+  { path: 'app-index', component: IndexComponent },
+  { path: 'profesor', component:ProfesorComponent,canActivate: [AuthGuard],
     children:[
       { path: 'acerca-profesor', component: AcercaDeProfesorComponent},
       { path: 'inicio-profesor', component: InicioProfesorComponent},
@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: 'contactanos', component: ContactanosComponent},
       { path: '', component: InicioProfesorComponent}
     ]},
-  { path: 'alumno', component:AlumnoComponent,
+  { path: 'alumno', component:AlumnoComponent,canActivate: [AuthGuard],
     children:[
       { path: 'acerca-estudiante', component: AcercaDeEstudianteComponent},
       { path: 'inicio-estudiante', component: InicioEstudiantesComponent,data: { animation: 'InicioEs' }},
