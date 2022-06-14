@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { body, validationResult } from 'express-validator';
+import { FALSE } from 'sass';
 
 dotenv.config();
 
@@ -41,38 +42,26 @@ app.get('/hola', function (req, res){
     res.send('[GET]Saludos desde express');
 });
 
-app.get('/movie', function (req, res){
-        res.json(
-            [
-            {title: "Rocky", actor:"Sylvester Stalone"},
-            {title:"Harry Potter", actor:"Daneil Radclife"},
-            ]  
-    );
-});
-
-app.get('/movie', function (req, res){
-    res.status(500).send({error:"Falla en el ssitema"}
-    );
-});
-
 app.listen(8001, () => {
-    console.log('Server is running at http://localhost:8000');
+    console.log('Server is running at http://localhost:8001');
 
 });
 
-/*
-router.route("/alumnos")
-    .post(async function (req, res){
-        var nombre = req.body.nombre;
-
-        res.status(200).json({
-            mensaje: nombre
-        }
-        );
-
+app.get('/profesor', function (req, res){
+    res.json(
+        [
+        {correo: "a01657023@tec.mx", password:"diana1234"},
+        {correo:"daniela@hotmail.com", actor:"danielaa"},
+        ]  
+);
 });
-*/
-var Movie = require("./models/Movies");
+
+app.get('/profesor', function (req, res){
+res.status(500).send({error:"Falla en el ssitema"}
+);
+});
+
+
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "error de conexion"));
@@ -103,27 +92,30 @@ router.get("/", function (req, res) {
         mensaje: "keep alive",
     });
 });
-router.route('/movie')
-    .post(body('name').isLength({ min: 5, max: 15 }).withMessage('must be at least 5 chars long'),
-        body('actor').isAlphanumeric().withMessage("must be alphanumeric"),
+
+var Estudiante = require("./models/Estudiantes");
+
+router.route('/estudiante')
+    .post(body('correo').isEmail().withMessage('must be an email'),
+        body('password').isStrongPassword().withMessage('Need to be an strong password'),
+        body('grado').isLength({min:1,max:20}).withMessage('Need to be min 1 and max 20'),
         async function (req: express.Request, res: express.Response) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        var movie = new Movie();
-        movie.name = req.body.name;
-        movie.releaseDate = req.body.releaseDate;
-        movie.revenue = req.body.revenue;
-        movie.actor = req.body.actor;
+        var estudiante = new Estudiante();
+        estudiante.correo = req.body.correo;
+        estudiante.password = req.body.password;
+        estudiante.grado = req.body.grado;
         try {
-            await movie.save(function (err: any) {
+            await estudiante.save(function (err: any) {
                 if (err) {
                     console.log(err);
                     if (err.name == "ValidationError")
                         res.status(400).send({ error: err.message });
                 }
-                res.status(201).send({ mensaje: "Pelicula creado" });
+                res.status(201).send({ mensaje: "Estudiante creado" });
             }
             );
 
@@ -133,57 +125,140 @@ router.route('/movie')
 
     }).get(function (req: express.Request, res: express.Response) {
 
-        Movie.find(function (err: any, movie: any) {
+        Estudiante.find(function (err: any, estudiante: any) {
             if (err) {
                 res.send(err);
             }
-            res.status(200).send(movie);
+            res.status(200).send(estudiante);
         });
     });
 
-router.route("/movie/:id")
+router.route("/estudiante/:id")
     .get(async function (req: express.Request, res: express.Response) {
         try {
-            const movie = await Movie.findOne({ _id: req.params.id })
-            res.send(movie)
+            const estudiante = await Estudiante.findOne({ _id: req.params.id })
+            res.send(estudiante)
         } catch {
             res.status(404)
-            res.send({ error: "Movie doesn't exist!" })
+            res.send({ error: "Estudiante doesn't exist!" })
         }
     })
-    .put(body('name').isLength({ min: 5, max: 15 }), async function (req: express.Request, res: express.Response) {
+    .put(body('correo').isLength({ min: 10, max: 25 }), async function (req: express.Request, res: express.Response) {
         try {
-            const movie = await Movie.findOne({ _id: req.params.id });
+            const estudiante = await Estudiante.findOne({ _id: req.params.id });
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            if (req.body.name) {
-                movie.name = req.body.name
+            if (req.body.correo) {
+                estudiante.correo = req.body.correo
             }
 
-            if (req.body.content) {
-                movie.author = req.body.author
+            if (req.body.password) {
+                estudiante.password = req.body.password
             }
 
-            await movie.save()
-            res.send(movie)
+            if (req.body.grado) {
+                estudiante.grado = req.body.grado
+            }
+
+            await estudiante.save()
+            res.send(estudiante)
         } catch {
             res.status(404)
-            res.send({ error: "Movie doesn't exist!" })
+            res.send({ error: "Estudiante doesn't exist!" })
         }
 
     }).delete(async (req, res) => {
         try {
-            await Movie.deleteOne({ _id: req.params.id })
+            await Estudiante.deleteOne({ _id: req.params.id })
             return res.status(204).send()
         } catch {
             res.status(404)
-            res.send({ error: "Movie doesn't exist!" })
+            res.send({ error: "Estudiante doesn't exist!" })
         }
     });
 
+    var Profesor = require("./models/Profesores");
 
+    router.route('/profesor')
+        .post(body('correo').isEmail().withMessage('must be an email'),
+            body('password').isStrongPassword().withMessage('Need to be an strong password (need to contain capital lettters, characters and numbers)'),
+            async function (req: express.Request, res: express.Response) {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            var profesor = new Profesor();
+            profesor.correo = req.body.correo;
+            profesor.password = req.body.password;
+            try {
+                await profesor.save(function (err: any) {
+                    if (err) {
+                        console.log(err);
+                        if (err.name == "ValidationError")
+                            res.status(400).send({ error: err.message });
+                    }
+                    res.status(201).send({ mensaje: "Profesor creado" });
+                }
+                );
+    
+            } catch (error) {
+                res.status(500).send({ error: error });
+            }
+    
+        }).get(function (req: express.Request, res: express.Response) {
+    
+            Profesor.find(function (err: any, profesor: any) {
+                if (err) {
+                    res.send(err);
+                }
+                res.status(200).send(profesor);
+            });
+        });
+    
+    router.route("/profesor/:id")
+        .get(async function (req: express.Request, res: express.Response) {
+            try {
+                const profesor = await Profesor.findOne({ _id: req.params.id })
+                res.send(profesor)
+            } catch {
+                res.status(404)
+                res.send({ error: "Profesor doesn't exist!" })
+            }
+        })
+        .put(body('correo').isLength({ min: 10, max: 25 }), async function (req: express.Request, res: express.Response) {
+            try {
+                const profesor = await Profesor.findOne({ _id: req.params.id });
+                const errors = validationResult(req);
+                if (!errors.isEmpty()) {
+                    return res.status(400).json({ errors: errors.array() });
+                }
+                if (req.body.correo) {
+                    profesor.correo = req.body.correo
+                }
+    
+                if (req.body.content) {
+                    profesor.password = req.body.password
+                }
+    
+                await profesor.save()
+                res.send(profesor)
+            } catch {
+                res.status(404)
+                res.send({ error: "Profesor doesn't exist!" })
+            }
+    
+        }).delete(async (req, res) => {
+            try {
+                await Profesor.deleteOne({ _id: req.params.id })
+                return res.status(204).send()
+            } catch {
+                res.status(404)
+                res.send({ error: "Profesor doesn't exist!" })
+            }
+        });
+    
 
 app.use("/api", router); //url base de nuestro api que tiene las rutas en el routerglobal.fetch = require('node-fetch');
 

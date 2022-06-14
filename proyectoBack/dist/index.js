@@ -43,31 +43,18 @@ db.once("openUri", function () {
 app.get('/hola', function (req, res) {
     res.send('[GET]Saludos desde express');
 });
-app.get('/movie', function (req, res) {
+app.listen(8001, () => {
+    console.log('Server is running at http://localhost:8001');
+});
+app.get('/profesor', function (req, res) {
     res.json([
-        { title: "Rocky", actor: "Sylvester Stalone" },
-        { title: "Harry Potter", actor: "Daneil Radclife" },
+        { correo: "a01657023@tec.mx", password: "diana1234" },
+        { correo: "daniela@hotmail.com", actor: "danielaa" },
     ]);
 });
-app.get('/movie', function (req, res) {
+app.get('/profesor', function (req, res) {
     res.status(500).send({ error: "Falla en el ssitema" });
 });
-app.listen(8001, () => {
-    console.log('Server is running at http://localhost:8000');
-});
-/*
-router.route("/alumnos")
-    .post(async function (req, res){
-        var nombre = req.body.nombre;
-
-        res.status(200).json({
-            mensaje: nombre
-        }
-        );
-
-});
-*/
-var Movie = require("./models/Movies");
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "error de conexion"));
 db.once("openUri", function () {
@@ -87,26 +74,26 @@ router.get("/", function (req, res) {
         mensaje: "keep alive",
     });
 });
-router.route('/movie')
-    .post((0, express_validator_1.body)('name').isLength({ min: 5, max: 15 }).withMessage('must be at least 5 chars long'), (0, express_validator_1.body)('actor').isAlphanumeric().withMessage("must be alphanumeric"), function (req, res) {
+var Estudiante = require("./models/Estudiantes");
+router.route('/estudiante')
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        var movie = new Movie();
-        movie.name = req.body.name;
-        movie.releaseDate = req.body.releaseDate;
-        movie.revenue = req.body.revenue;
-        movie.actor = req.body.actor;
+        var estudiante = new Estudiante();
+        estudiante.correo = req.body.correo;
+        estudiante.password = req.body.password;
+        estudiante.grado = req.body.grado;
         try {
-            yield movie.save(function (err) {
+            yield estudiante.save(function (err) {
                 if (err) {
                     console.log(err);
                     if (err.name == "ValidationError")
                         res.status(400).send({ error: err.message });
                 }
-                res.status(201).send({ mensaje: "Pelicula creado" });
+                res.status(201).send({ mensaje: "Estudiante creado" });
             });
         }
         catch (error) {
@@ -114,56 +101,137 @@ router.route('/movie')
         }
     });
 }).get(function (req, res) {
-    Movie.find(function (err, movie) {
+    Estudiante.find(function (err, estudiante) {
         if (err) {
             res.send(err);
         }
-        res.status(200).send(movie);
+        res.status(200).send(estudiante);
     });
 });
-router.route("/movie/:id")
+router.route("/estudiante/:id")
     .get(function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const movie = yield Movie.findOne({ _id: req.params.id });
-            res.send(movie);
+            const estudiante = yield Estudiante.findOne({ _id: req.params.id });
+            res.send(estudiante);
         }
         catch (_a) {
             res.status(404);
-            res.send({ error: "Movie doesn't exist!" });
+            res.send({ error: "Estudiante doesn't exist!" });
         }
     });
 })
-    .put((0, express_validator_1.body)('name').isLength({ min: 5, max: 15 }), function (req, res) {
+    .put((0, express_validator_1.body)('correo').isLength({ min: 10, max: 25 }), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const movie = yield Movie.findOne({ _id: req.params.id });
+            const estudiante = yield Estudiante.findOne({ _id: req.params.id });
             const errors = (0, express_validator_1.validationResult)(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            if (req.body.name) {
-                movie.name = req.body.name;
+            if (req.body.correo) {
+                estudiante.correo = req.body.correo;
             }
-            if (req.body.content) {
-                movie.author = req.body.author;
+            if (req.body.password) {
+                estudiante.password = req.body.password;
             }
-            yield movie.save();
-            res.send(movie);
+            if (req.body.grado) {
+                estudiante.grado = req.body.grado;
+            }
+            yield estudiante.save();
+            res.send(estudiante);
         }
         catch (_a) {
             res.status(404);
-            res.send({ error: "Movie doesn't exist!" });
+            res.send({ error: "Estudiante doesn't exist!" });
         }
     });
 }).delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield Movie.deleteOne({ _id: req.params.id });
+        yield Estudiante.deleteOne({ _id: req.params.id });
         return res.status(204).send();
     }
     catch (_a) {
         res.status(404);
-        res.send({ error: "Movie doesn't exist!" });
+        res.send({ error: "Estudiante doesn't exist!" });
+    }
+}));
+var Profesor = require("./models/Profesores");
+router.route('/profesor')
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password (need to contain capital lettters, characters and numbers)'), function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errors = (0, express_validator_1.validationResult)(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        var profesor = new Profesor();
+        profesor.correo = req.body.correo;
+        profesor.password = req.body.password;
+        try {
+            yield profesor.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    if (err.name == "ValidationError")
+                        res.status(400).send({ error: err.message });
+                }
+                res.status(201).send({ mensaje: "Profesor creado" });
+            });
+        }
+        catch (error) {
+            res.status(500).send({ error: error });
+        }
+    });
+}).get(function (req, res) {
+    Profesor.find(function (err, profesor) {
+        if (err) {
+            res.send(err);
+        }
+        res.status(200).send(profesor);
+    });
+});
+router.route("/profesor/:id")
+    .get(function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const profesor = yield Profesor.findOne({ _id: req.params.id });
+            res.send(profesor);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Profesor doesn't exist!" });
+        }
+    });
+})
+    .put((0, express_validator_1.body)('correo').isLength({ min: 10, max: 25 }), function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const profesor = yield Profesor.findOne({ _id: req.params.id });
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            if (req.body.correo) {
+                profesor.correo = req.body.correo;
+            }
+            if (req.body.content) {
+                profesor.password = req.body.password;
+            }
+            yield profesor.save();
+            res.send(profesor);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Profesor doesn't exist!" });
+        }
+    });
+}).delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield Profesor.deleteOne({ _id: req.params.id });
+        return res.status(204).send();
+    }
+    catch (_b) {
+        res.status(404);
+        res.send({ error: "Profesor doesn't exist!" });
     }
 }));
 app.use("/api", router); //url base de nuestro api que tiene las rutas en el routerglobal.fetch = require('node-fetch');
