@@ -1,4 +1,3 @@
-
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { body, validationResult } from 'express-validator';
@@ -24,7 +23,7 @@ app.use(morgan("dev"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.json());
+app.use(express.json())
 
 var router = express.Router();
 var mongoose = require("mongoose");
@@ -56,11 +55,12 @@ app.get('/movie', function (req, res){
     );
 });
 
-app.listen(8000, () => {
+app.listen(8001, () => {
     console.log('Server is running at http://localhost:8000');
 
 });
 
+/*
 router.route("/alumnos")
     .post(async function (req, res){
         var nombre = req.body.nombre;
@@ -70,8 +70,8 @@ router.route("/alumnos")
         }
         );
 
-    });
-
+});
+*/
 var Movie = require("./models/Movies");
 
 var db = mongoose.connection;
@@ -103,8 +103,6 @@ router.get("/", function (req, res) {
         mensaje: "keep alive",
     });
 });
-
-
 router.route('/movie')
     .post(body('name').isLength({ min: 5, max: 15 }).withMessage('must be at least 5 chars long'),
         body('actor').isAlphanumeric().withMessage("must be alphanumeric"),
@@ -128,7 +126,6 @@ router.route('/movie')
                 res.status(201).send({ mensaje: "Pelicula creado" });
             }
             );
-            res.json({mensaje: "pelicula creado"});
 
         } catch (error) {
             res.status(500).send({ error: error });

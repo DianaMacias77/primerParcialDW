@@ -52,18 +52,21 @@ app.get('/movie', function (req, res) {
 app.get('/movie', function (req, res) {
     res.status(500).send({ error: "Falla en el ssitema" });
 });
-app.listen(8000, () => {
+app.listen(8001, () => {
     console.log('Server is running at http://localhost:8000');
 });
+/*
 router.route("/alumnos")
-    .post(function (req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
+    .post(async function (req, res){
         var nombre = req.body.nombre;
+
         res.status(200).json({
             mensaje: nombre
-        });
-    });
+        }
+        );
+
 });
+*/
 var Movie = require("./models/Movies");
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "error de conexion"));
