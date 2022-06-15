@@ -121,22 +121,13 @@ router.route("/estudiante/:id")
         }
     });
 })
-    .put((0, express_validator_1.body)('correo').isLength({ min: 10, max: 25 }), function (req, res) {
+    .put(function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const estudiante = yield Estudiante.findOne({ _id: req.params.id });
             const errors = (0, express_validator_1.validationResult)(req);
             if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            }
-            if (req.body.correo) {
-                estudiante.correo = req.body.correo;
-            }
-            if (req.body.password) {
-                estudiante.password = req.body.password;
-            }
-            if (req.body.grado) {
-                estudiante.grado = req.body.grado;
+                return res.status(200).json({ errors: errors.array() });
             }
             yield estudiante.save();
             res.send(estudiante);
@@ -149,7 +140,7 @@ router.route("/estudiante/:id")
 }).delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Estudiante.deleteOne({ _id: req.params.id });
-        return res.status(204).send();
+        return res.status(204).send({ mensaje: "Estudiante eliminado" });
     }
     catch (_a) {
         res.status(404);
@@ -158,7 +149,7 @@ router.route("/estudiante/:id")
 }));
 var Profesor = require("./models/Profesores");
 router.route('/profesor')
-    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password (need to contain capital lettters, characters and numbers)'), function (req, res) {
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -202,7 +193,7 @@ router.route("/profesor/:id")
         }
     });
 })
-    .put((0, express_validator_1.body)('correo').isLength({ min: 10, max: 25 }), function (req, res) {
+    .put((0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const profesor = yield Profesor.findOne({ _id: req.params.id });
@@ -213,21 +204,38 @@ router.route("/profesor/:id")
             if (req.body.correo) {
                 profesor.correo = req.body.correo;
             }
-            if (req.body.content) {
-                profesor.password = req.body.password;
-            }
             yield profesor.save();
             res.send(profesor);
         }
         catch (_a) {
             res.status(404);
-            res.send({ error: "Profesor doesn't exist!" });
+            res.send({ error: "Movie doesn't exist!" });
         }
+        ((0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), function (req, res) {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const profesor = yield Profesor.findOne({ _id: req.params.id });
+                    const errors = (0, express_validator_1.validationResult)(req);
+                    if (!errors.isEmpty()) {
+                        return res.status(400).json({ errors: errors.array() });
+                    }
+                    if (req.body.correo) {
+                        profesor.correo = req.body.correo;
+                    }
+                    yield profesor.save();
+                    res.send(profesor);
+                }
+                catch (_a) {
+                    res.status(404);
+                    res.send({ error: "Movie doesn't exist!" });
+                }
+            });
+        });
     });
 }).delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Profesor.deleteOne({ _id: req.params.id });
-        return res.status(204).send();
+        return res.status(204).send({ mensaje: "Profesor eliminado" });
     }
     catch (_b) {
         res.status(404);

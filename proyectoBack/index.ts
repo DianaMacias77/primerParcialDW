@@ -143,7 +143,7 @@ router.route("/estudiante/:id")
             res.send({ error: "Estudiante doesn't exist!" })
         }
     })
-    .put(body('correo').isLength({ min: 10, max: 25 }), async function (req: express.Request, res: express.Response) {
+    .put(body('correo').isEmail().withMessage("Need to be an email"), async function (req: express.Request, res: express.Response) {
         try {
             const estudiante = await Estudiante.findOne({ _id: req.params.id });
             const errors = validationResult(req);
@@ -153,26 +153,17 @@ router.route("/estudiante/:id")
             if (req.body.correo) {
                 estudiante.correo = req.body.correo
             }
-
-            if (req.body.password) {
-                estudiante.password = req.body.password
-            }
-
-            if (req.body.grado) {
-                estudiante.grado = req.body.grado
-            }
-
             await estudiante.save()
             res.send(estudiante)
         } catch {
             res.status(404)
-            res.send({ error: "Estudiante doesn't exist!" })
+            res.send({ error: "Email doesn't exist!" })
         }
 
     }).delete(async (req, res) => {
         try {
             await Estudiante.deleteOne({ _id: req.params.id })
-            return res.status(204).send()
+            return res.status(204).send({ mensaje: "Estudiante eliminado" });
         } catch {
             res.status(404)
             res.send({ error: "Estudiante doesn't exist!" })
@@ -183,7 +174,7 @@ router.route("/estudiante/:id")
 
     router.route('/profesor')
         .post(body('correo').isEmail().withMessage('must be an email'),
-            body('password').isStrongPassword().withMessage('Need to be an strong password (need to contain capital lettters, characters and numbers)'),
+            body('password').isStrongPassword().withMessage('Need to be an strong password'),
             async function (req: express.Request, res: express.Response) {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -227,7 +218,7 @@ router.route("/estudiante/:id")
                 res.send({ error: "Profesor doesn't exist!" })
             }
         })
-        .put(body('correo').isLength({ min: 10, max: 25 }), async function (req: express.Request, res: express.Response) {
+        .put(body('correo').isEmail().withMessage("Need to be an email"), async function (req: express.Request, res: express.Response) {
             try {
                 const profesor = await Profesor.findOne({ _id: req.params.id });
                 const errors = validationResult(req);
@@ -237,22 +228,17 @@ router.route("/estudiante/:id")
                 if (req.body.correo) {
                     profesor.correo = req.body.correo
                 }
-    
-                if (req.body.content) {
-                    profesor.password = req.body.password
-                }
-    
                 await profesor.save()
                 res.send(profesor)
             } catch {
                 res.status(404)
-                res.send({ error: "Profesor doesn't exist!" })
+                res.send({ error: "Email doesn't exist!" })
             }
     
         }).delete(async (req, res) => {
             try {
                 await Profesor.deleteOne({ _id: req.params.id })
-                return res.status(204).send()
+                return res.status(204).send({ mensaje: "Profesor eliminado" });
             } catch {
                 res.status(404)
                 res.send({ error: "Profesor doesn't exist!" })
