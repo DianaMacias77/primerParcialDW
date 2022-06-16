@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { body, validationResult } from 'express-validator';
 import { FALSE } from 'sass';
+import {auth, requiredScopes} from 'express-oauth2-jwt-bearer';
 
 dotenv.config();
 
@@ -29,6 +30,12 @@ app.use(express.json())
 var router = express.Router();
 var mongoose = require("mongoose");
 
+const checkJwt = auth({
+    audience: 'http://localhost',
+    issuerBaseURL: 'https://dev-5xxxigo6.us.auth0.com/'
+});
+
+
 var uri = "mongodb+srv://mongouser:password1234@cluster0.xagno.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -42,19 +49,11 @@ app.get('/hola', function (req, res){
     res.send('[GET]Saludos desde express');
 });
 
-app.listen(8001, () => {
-    console.log('Server is running at http://localhost:8001');
+app.listen(8002, () => {
+    console.log('Server is running at http://localhost:8002');
 
 });
 
-app.get('/profesor', function (req, res){
-    res.json(
-        [
-        {correo: "a01657023@tec.mx", password:"diana1234"},
-        {correo:"daniela@hotmail.com", actor:"danielaa"},
-        ]  
-);
-});
 
 app.get('/profesor', function (req, res){
 res.status(500).send({error:"Falla en el ssitema"}
@@ -98,7 +97,8 @@ var Estudiante = require("./models/Estudiantes");
 router.route('/estudiante')
     .post(body('correo').isEmail().withMessage('must be an email'),
         body('password').isStrongPassword().withMessage('Need to be an strong password'),
-        body('grado').isLength({min:1,max:20}).withMessage('Need to be min 1 and max 20'),
+        body('grado').isLength({min:1,max:20}).withMessage('Need to be min 1 and max 20'), 
+        checkJwt,
         async function (req: express.Request, res: express.Response) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -123,7 +123,7 @@ router.route('/estudiante')
             res.status(500).send({ error: error });
         }
 
-    }).get(function (req: express.Request, res: express.Response) {
+    }).get(checkJwt,function (req: express.Request, res: express.Response) {
 
         Estudiante.find(function (err: any, estudiante: any) {
             if (err) {
@@ -134,7 +134,7 @@ router.route('/estudiante')
     });
 
 router.route("/estudiante/:id")
-    .get(async function (req: express.Request, res: express.Response) {
+    .get(checkJwt,async function (req: express.Request, res: express.Response) {
         try {
             const estudiante = await Estudiante.findOne({ _id: req.params.id })
             res.send(estudiante)
@@ -143,7 +143,8 @@ router.route("/estudiante/:id")
             res.send({ error: "Estudiante doesn't exist!" })
         }
     })
-    .put(body('correo').isEmail().withMessage("Need to be an email"), async function (req: express.Request, res: express.Response) {
+    .put(checkJwt,
+        body('correo').isEmail().withMessage("Need to be an email"), body('password').isStrongPassword().withMessage("Need to be an strong password"),body('grado').isLength({min:1,max:20}).withMessage("Need to be min 1 digit and less than 20"), async function (req: express.Request, res: express.Response) {
         try {
             const estudiante = await Estudiante.findOne({ _id: req.params.id });
             const errors = validationResult(req);
@@ -153,6 +154,12 @@ router.route("/estudiante/:id")
             if (req.body.correo) {
                 estudiante.correo = req.body.correo
             }
+            if (req.body.password) {
+                estudiante.password = req.body.password
+            }
+            if (req.body.grado) {
+                estudiante.grado = req.body.grado
+            }
             await estudiante.save()
             res.send(estudiante)
         } catch {
@@ -160,7 +167,7 @@ router.route("/estudiante/:id")
             res.send({ error: "Email doesn't exist!" })
         }
 
-    }).delete(async (req, res) => {
+    }).delete(checkJwt,async (req, res) => {
         try {
             await Estudiante.deleteOne({ _id: req.params.id })
             return res.status(204).send({ mensaje: "Estudiante eliminado" });
@@ -175,6 +182,7 @@ router.route("/estudiante/:id")
     router.route('/profesor')
         .post(body('correo').isEmail().withMessage('must be an email'),
             body('password').isStrongPassword().withMessage('Need to be an strong password'),
+            checkJwt,
             async function (req: express.Request, res: express.Response) {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -198,7 +206,7 @@ router.route("/estudiante/:id")
                 res.status(500).send({ error: error });
             }
     
-        }).get(function (req: express.Request, res: express.Response) {
+        }).get(checkJwt,function (req: express.Request, res: express.Response) {
     
             Profesor.find(function (err: any, profesor: any) {
                 if (err) {
@@ -209,7 +217,7 @@ router.route("/estudiante/:id")
         });
     
     router.route("/profesor/:id")
-        .get(async function (req: express.Request, res: express.Response) {
+        .get(checkJwt,async function (req: express.Request, res: express.Response) {
             try {
                 const profesor = await Profesor.findOne({ _id: req.params.id })
                 res.send(profesor)
@@ -218,7 +226,8 @@ router.route("/estudiante/:id")
                 res.send({ error: "Profesor doesn't exist!" })
             }
         })
-        .put(body('correo').isEmail().withMessage("Need to be an email"), async function (req: express.Request, res: express.Response) {
+        .put(checkJwt,
+            body('correo').isEmail().withMessage("Need to be an email"), body('password').isStrongPassword().withMessage("Need to be an strong password"), async function (req: express.Request, res: express.Response) {
             try {
                 const profesor = await Profesor.findOne({ _id: req.params.id });
                 const errors = validationResult(req);
@@ -235,7 +244,7 @@ router.route("/estudiante/:id")
                 res.send({ error: "Email doesn't exist!" })
             }
     
-        }).delete(async (req, res) => {
+        }).delete(checkJwt,async (req, res) => {
             try {
                 await Profesor.deleteOne({ _id: req.params.id })
                 return res.status(204).send({ mensaje: "Profesor eliminado" });

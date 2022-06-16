@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_validator_1 = require("express-validator");
+const express_oauth2_jwt_bearer_1 = require("express-oauth2-jwt-bearer");
 dotenv_1.default.config();
 const port = process.env.PORT;
 var bodyParser = require("body-parser");
@@ -33,6 +34,10 @@ app.use(bodyParser.json());
 app.use(express_1.default.json());
 var router = express_1.default.Router();
 var mongoose = require("mongoose");
+const checkJwt = (0, express_oauth2_jwt_bearer_1.auth)({
+    audience: 'http://localhost',
+    issuerBaseURL: 'https://dev-5xxxigo6.us.auth0.com/'
+});
 var uri = "mongodb+srv://mongouser:password1234@cluster0.xagno.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
@@ -43,8 +48,8 @@ db.once("openUri", function () {
 app.get('/hola', function (req, res) {
     res.send('[GET]Saludos desde express');
 });
-app.listen(8001, () => {
-    console.log('Server is running at http://localhost:8001');
+app.listen(8002, () => {
+    console.log('Server is running at http://localhost:8002');
 });
 app.get('/profesor', function (req, res) {
     res.json([
@@ -76,7 +81,7 @@ router.get("/", function (req, res) {
 });
 var Estudiante = require("./models/Estudiantes");
 router.route('/estudiante')
-    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), function (req, res) {
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), checkJwt, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -100,7 +105,7 @@ router.route('/estudiante')
             res.status(500).send({ error: error });
         }
     });
-}).get(function (req, res) {
+}).get(checkJwt, function (req, res) {
     Estudiante.find(function (err, estudiante) {
         if (err) {
             res.send(err);
@@ -109,7 +114,7 @@ router.route('/estudiante')
     });
 });
 router.route("/estudiante/:id")
-    .get(function (req, res) {
+    .get(checkJwt, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const estudiante = yield Estudiante.findOne({ _id: req.params.id });
@@ -121,23 +126,32 @@ router.route("/estudiante/:id")
         }
     });
 })
-    .put(function (req, res) {
+    .put(checkJwt, (0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), (0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage("Need to be min 1 digit and less than 20"), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const estudiante = yield Estudiante.findOne({ _id: req.params.id });
             const errors = (0, express_validator_1.validationResult)(req);
             if (!errors.isEmpty()) {
-                return res.status(200).json({ errors: errors.array() });
+                return res.status(400).json({ errors: errors.array() });
+            }
+            if (req.body.correo) {
+                estudiante.correo = req.body.correo;
+            }
+            if (req.body.password) {
+                estudiante.password = req.body.password;
+            }
+            if (req.body.grado) {
+                estudiante.grado = req.body.grado;
             }
             yield estudiante.save();
             res.send(estudiante);
         }
         catch (_a) {
             res.status(404);
-            res.send({ error: "Estudiante doesn't exist!" });
+            res.send({ error: "Email doesn't exist!" });
         }
     });
-}).delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}).delete(checkJwt, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Estudiante.deleteOne({ _id: req.params.id });
         return res.status(204).send({ mensaje: "Estudiante eliminado" });
@@ -149,7 +163,7 @@ router.route("/estudiante/:id")
 }));
 var Profesor = require("./models/Profesores");
 router.route('/profesor')
-    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), function (req, res) {
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), checkJwt, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -172,7 +186,7 @@ router.route('/profesor')
             res.status(500).send({ error: error });
         }
     });
-}).get(function (req, res) {
+}).get(checkJwt, function (req, res) {
     Profesor.find(function (err, profesor) {
         if (err) {
             res.send(err);
@@ -181,7 +195,7 @@ router.route('/profesor')
     });
 });
 router.route("/profesor/:id")
-    .get(function (req, res) {
+    .get(checkJwt, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const profesor = yield Profesor.findOne({ _id: req.params.id });
@@ -193,7 +207,7 @@ router.route("/profesor/:id")
         }
     });
 })
-    .put((0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), function (req, res) {
+    .put(checkJwt, (0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), (0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const profesor = yield Profesor.findOne({ _id: req.params.id });
@@ -209,30 +223,10 @@ router.route("/profesor/:id")
         }
         catch (_a) {
             res.status(404);
-            res.send({ error: "Movie doesn't exist!" });
+            res.send({ error: "Email doesn't exist!" });
         }
-        ((0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), function (req, res) {
-            return __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const profesor = yield Profesor.findOne({ _id: req.params.id });
-                    const errors = (0, express_validator_1.validationResult)(req);
-                    if (!errors.isEmpty()) {
-                        return res.status(400).json({ errors: errors.array() });
-                    }
-                    if (req.body.correo) {
-                        profesor.correo = req.body.correo;
-                    }
-                    yield profesor.save();
-                    res.send(profesor);
-                }
-                catch (_a) {
-                    res.status(404);
-                    res.send({ error: "Movie doesn't exist!" });
-                }
-            });
-        });
     });
-}).delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}).delete(checkJwt, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Profesor.deleteOne({ _id: req.params.id });
         return res.status(204).send({ mensaje: "Profesor eliminado" });
