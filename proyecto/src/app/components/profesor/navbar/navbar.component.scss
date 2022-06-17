@@ -17,11 +17,15 @@ $color: mediumpurple;
 		display: block;
 		margin: auto;
 	}
+  .hamburger{
+    width: 30px;
+		height: 30px;
+  }
 }
 @media (min-width: $pantalla-telefono) and (max-width: $pantalla-compu) {
 	header {
 		width: auto;
-		height: 100px;
+		height: 140px;
 	}
 
 	.img {
@@ -29,6 +33,11 @@ $color: mediumpurple;
 		height: auto;
 		float: $position;
 	}
+  .hamburger{
+    width: 40px;
+		height: 40px;
+
+  }
 }
 
 @mixin tema($variable: red) {

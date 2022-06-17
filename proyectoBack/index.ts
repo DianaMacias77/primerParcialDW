@@ -36,7 +36,7 @@ const checkJwt = auth({
 });
 
 
-var uri = "mongodb+srv://mongouser:password1234@cluster0.xagno.mongodb.net/?retryWrites=true&w=majority";
+var uri = "mongodb+srv://mongouser:password1234@cluster0.csseq.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 var db = mongoose.connection;

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatIconModule} from '@angular/material/icon';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +51,7 @@ import { ProfesorComponent } from './components/profesor/profesor/profesor.compo
   ],
   imports: [
     BrowserModule,
+    MatButtonToggleModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbPaginationModule,
@@ -55,6 +59,7 @@ import { ProfesorComponent } from './components/profesor/profesor/profesor.compo
     NgbModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    MatIconModule,
     AuthModule.forRoot({
       domain: 'dev-5xxxigo6.us.auth0.com',
       clientId: 'rEmx9LLI3P05OOww7EUCrPSiGdf7dFVJ'
