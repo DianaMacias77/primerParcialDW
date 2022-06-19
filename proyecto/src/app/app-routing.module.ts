@@ -7,12 +7,13 @@ import{AcercaDeEstudianteComponent}from './components/alumno/acerca-de-estudiant
 import { InicioProfesorComponent } from './components/profesor/inicio-profesor/inicio-profesor.component';
 import { AcercaDeProfesorComponent } from './components/profesor/acerca-de-profesor/acerca-de-profesor.component';
 import { PublicacionesProfesorComponent } from './components/profesor/publicaciones-profesor/publicaciones-profesor.component';
-import { ContactanosComponent } from './components/contactanos/contactanos.component';
+import { ContactanosComponent } from './components/alumno/contactanos/contactanos.component';
 import { InicioEstudiantesComponent } from './components/alumno/inicio-estudiantes/inicio-estudiantes.component';
 import { PublicacionesEstudianteComponent } from './components/alumno/publicaciones-estudiante/publicaciones-estudiante.component';
 import { AdministradorComponent } from './components/administrador/administrador.component';
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
+import { ContactanosProfesorComponent } from './components/profesor/contactanos-profesor/contactanos-profesor.component';
 
 const routes: Routes = [
   { path: 'app-index', component: IndexComponent },
@@ -21,7 +22,7 @@ const routes: Routes = [
       { path: 'acerca-profesor', component: AcercaDeProfesorComponent},
       { path: 'inicio-profesor', component: InicioProfesorComponent},
       { path: 'publicaciones-profesor', component: PublicacionesProfesorComponent},
-      { path: 'contactanos', component: ContactanosComponent},
+      { path: 'contactanos-profesor', component: ContactanosProfesorComponent},
       { path: '', component: InicioProfesorComponent}
     ]},
   { path: 'alumno', component:AlumnoComponent,canActivate: [AuthGuard],

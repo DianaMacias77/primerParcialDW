@@ -33,7 +33,7 @@ var mongoose = require("mongoose");
 const checkJwt = auth({
     audience: 'http://localhost',
     issuerBaseURL: 'https://dev-5xxxigo6.us.auth0.com/'
-});
+}); 
 
 
 var uri = "mongodb+srv://mongouser:password1234@cluster0.csseq.mongodb.net/?retryWrites=true&w=majority";
