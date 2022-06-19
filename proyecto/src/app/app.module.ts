@@ -15,7 +15,7 @@ import { IndexComponent } from './components/index/index.component';
 import { InicioProfesorComponent } from './components/profesor/inicio-profesor/inicio-profesor.component';
 import { AcercaDeProfesorComponent } from './components/profesor/acerca-de-profesor/acerca-de-profesor.component';
 import { PublicacionesProfesorComponent } from './components/profesor/publicaciones-profesor/publicaciones-profesor.component';
-import { ContactanosComponent } from './components/alumno/contactanos/contactanos.component';
+import { ContactanosComponent } from './components/contactanos/contactanos.component';
 import { InicioEstudiantesComponent } from './components/alumno/inicio-estudiantes/inicio-estudiantes.component';
 import { AcercaDeEstudianteComponent } from './components/alumno/acerca-de-estudiante/acerca-de-estudiante.component';
 import { PublicacionesEstudianteComponent } from './components/alumno/publicaciones-estudiante/publicaciones-estudiante.component';
@@ -30,7 +30,6 @@ import { LoginButtonComponent } from './components/login-button/login-button.com
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
-import { ContactanosProfesorComponent } from './components/profesor/contactanos-profesor/contactanos-profesor.component';
 import { NoticiasComponent } from './components/profesor/noticias/noticias.component';
 
 @NgModule({
@@ -52,7 +51,6 @@ import { NoticiasComponent } from './components/profesor/noticias/noticias.compo
     AlumnoComponent,
     ProfesorComponent,
     ContactanosComponent,
-    ContactanosProfesorComponent,
     NoticiasComponent
   ],
   imports: [

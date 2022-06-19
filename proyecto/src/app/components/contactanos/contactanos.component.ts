@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ServicioService } from './../../../services/servicio.service';
+import { ServicioService } from '../../services/servicio.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -23,7 +23,7 @@ export class ContactanosComponent implements OnInit {
   constructor(private router: Router,public servicioService:ServicioService) { }
 
   ngOnInit(): void {
-    this.servicioService.imprimirdatos();
+    this.servicioService.imprimirdatosE();
     this.servicioService.getdatosE().subscribe(data =>
       {this.datos=data;},(err:HttpErrorResponse)=>{
         if(err.error instanceof Error){
