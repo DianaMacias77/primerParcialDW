@@ -3,7 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
-
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { ChartModule } from 'smart-webcomponents-angular/chart';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +30,7 @@ import { LoginButtonComponent } from './components/login-button/login-button.com
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
+import { NoticiasComponent } from './components/profesor/noticias/noticias.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,6 @@ import { ProfesorComponent } from './components/profesor/profesor/profesor.compo
     InicioProfesorComponent,
     AcercaDeProfesorComponent,
     PublicacionesProfesorComponent,
-    ContactanosComponent,
     InicioEstudiantesComponent,
     AcercaDeEstudianteComponent,
     PublicacionesEstudianteComponent,
@@ -47,7 +49,9 @@ import { ProfesorComponent } from './components/profesor/profesor/profesor.compo
     LoginButtonComponent,
     LogoutButtonComponent,
     AlumnoComponent,
-    ProfesorComponent
+    ProfesorComponent,
+    ContactanosComponent,
+    NoticiasComponent
   ],
   imports: [
     BrowserModule,
@@ -60,12 +64,29 @@ import { ProfesorComponent } from './components/profesor/profesor/profesor.compo
     FontAwesomeModule,
     ReactiveFormsModule,
     MatIconModule,
+    HttpClientModule,
+    ChartModule,
     AuthModule.forRoot({
       domain: 'dev-5xxxigo6.us.auth0.com',
-      clientId: 'rEmx9LLI3P05OOww7EUCrPSiGdf7dFVJ'
+      clientId: 'rEmx9LLI3P05OOww7EUCrPSiGdf7dFVJ',
+      audience: 'https://dev-5xxxigo6.us.auth0.com/api/v2/',
+      scope: 'read:current_user',
+      httpInterceptor:{
+        allowedList:[
+          {
+            uri:'https://dev-5xxxigo6.us.auth0.com/api/v2/*',
+            tokenOptions:{
+              audience:'https://dev-5xxxigo6.us.auth0.com/api/v2/',
+              scope:'read:current_user'
+            }
+          }
+        ]
+      }
     }),
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:AuthHttpInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

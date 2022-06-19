@@ -13,6 +13,7 @@ import { PublicacionesEstudianteComponent } from './components/alumno/publicacio
 import { AdministradorComponent } from './components/administrador/administrador.component';
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
+import { NoticiasComponent } from './components/profesor/noticias/noticias.component';
 
 const routes: Routes = [
   { path: 'app-index', component: IndexComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'inicio-profesor', component: InicioProfesorComponent},
       { path: 'publicaciones-profesor', component: PublicacionesProfesorComponent},
       { path: 'contactanos', component: ContactanosComponent},
+      { path: 'noticias',component:NoticiasComponent},
       { path: '', component: InicioProfesorComponent}
     ]},
   { path: 'alumno', component:AlumnoComponent,canActivate: [AuthGuard],

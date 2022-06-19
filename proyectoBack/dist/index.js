@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_validator_1 = require("express-validator");
-const express_oauth2_jwt_bearer_1 = require("express-oauth2-jwt-bearer");
 dotenv_1.default.config();
 const port = process.env.PORT;
 var bodyParser = require("body-parser");
@@ -34,11 +33,11 @@ app.use(bodyParser.json());
 app.use(express_1.default.json());
 var router = express_1.default.Router();
 var mongoose = require("mongoose");
-const checkJwt = (0, express_oauth2_jwt_bearer_1.auth)({
+/* const checkJwt = auth({
     audience: 'http://localhost',
     issuerBaseURL: 'https://dev-5xxxigo6.us.auth0.com/'
-});
-var uri = "mongodb+srv://mongouser:password1234@cluster0.xagno.mongodb.net/?retryWrites=true&w=majority";
+}); */
+var uri = "mongodb+srv://mongouser:password1234@cluster0.csseq.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "error de conexion"));
@@ -50,12 +49,6 @@ app.get('/hola', function (req, res) {
 });
 app.listen(8002, () => {
     console.log('Server is running at http://localhost:8002');
-});
-app.get('/profesor', function (req, res) {
-    res.json([
-        { correo: "a01657023@tec.mx", password: "diana1234" },
-        { correo: "daniela@hotmail.com", actor: "danielaa" },
-    ]);
 });
 app.get('/profesor', function (req, res) {
     res.status(500).send({ error: "Falla en el ssitema" });
@@ -81,7 +74,9 @@ router.get("/", function (req, res) {
 });
 var Estudiante = require("./models/Estudiantes");
 router.route('/estudiante')
-    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), checkJwt, function (req, res) {
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), 
+/*checkJwt,*/
+function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -105,7 +100,7 @@ router.route('/estudiante')
             res.status(500).send({ error: error });
         }
     });
-}).get(checkJwt, function (req, res) {
+}).get(/*checkJwt,*/ function (req, res) {
     Estudiante.find(function (err, estudiante) {
         if (err) {
             res.send(err);
@@ -114,7 +109,7 @@ router.route('/estudiante')
     });
 });
 router.route("/estudiante/:id")
-    .get(checkJwt, function (req, res) {
+    .get(/*checkJwt,*/ function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const estudiante = yield Estudiante.findOne({ _id: req.params.id });
@@ -126,7 +121,7 @@ router.route("/estudiante/:id")
         }
     });
 })
-    .put(checkJwt, (0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), (0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage("Need to be min 1 digit and less than 20"), function (req, res) {
+    .put(/*checkJwt,*/ (0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), (0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), (0, express_validator_1.body)('grado').isLength({ min: 1, max: 20 }).withMessage("Need to be min 1 digit and less than 20"), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const estudiante = yield Estudiante.findOne({ _id: req.params.id });
@@ -151,7 +146,7 @@ router.route("/estudiante/:id")
             res.send({ error: "Email doesn't exist!" });
         }
     });
-}).delete(checkJwt, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}).delete(/*checkJwt,*/ (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Estudiante.deleteOne({ _id: req.params.id });
         return res.status(204).send({ mensaje: "Estudiante eliminado" });
@@ -163,7 +158,9 @@ router.route("/estudiante/:id")
 }));
 var Profesor = require("./models/Profesores");
 router.route('/profesor')
-    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), checkJwt, function (req, res) {
+    .post((0, express_validator_1.body)('correo').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('password').isStrongPassword().withMessage('Need to be an strong password'), 
+/*checkJwt,*/
+function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -186,7 +183,7 @@ router.route('/profesor')
             res.status(500).send({ error: error });
         }
     });
-}).get(checkJwt, function (req, res) {
+}).get(/*checkJwt,*/ function (req, res) {
     Profesor.find(function (err, profesor) {
         if (err) {
             res.send(err);
@@ -195,7 +192,7 @@ router.route('/profesor')
     });
 });
 router.route("/profesor/:id")
-    .get(checkJwt, function (req, res) {
+    .get(/*checkJwt,*/ function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const profesor = yield Profesor.findOne({ _id: req.params.id });
@@ -207,7 +204,7 @@ router.route("/profesor/:id")
         }
     });
 })
-    .put(checkJwt, (0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), (0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), function (req, res) {
+    .put(/*checkJwt,*/ (0, express_validator_1.body)('correo').isEmail().withMessage("Need to be an email"), (0, express_validator_1.body)('password').isStrongPassword().withMessage("Need to be an strong password"), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const profesor = yield Profesor.findOne({ _id: req.params.id });
@@ -226,7 +223,7 @@ router.route("/profesor/:id")
             res.send({ error: "Email doesn't exist!" });
         }
     });
-}).delete(checkJwt, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}).delete(/*checkJwt,*/ (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Profesor.deleteOne({ _id: req.params.id });
         return res.status(204).send({ mensaje: "Profesor eliminado" });
@@ -234,6 +231,98 @@ router.route("/profesor/:id")
     catch (_b) {
         res.status(404);
         res.send({ error: "Profesor doesn't exist!" });
+    }
+}));
+var conEstudiante = require("./models/conEstudiante");
+router.route('/conestudiante')
+    .post((0, express_validator_1.body)('nombre').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), (0, express_validator_1.body)('apellido').isLength({ min: 1, max: 50 }).withMessage('Need to be min 1 and max 50'), (0, express_validator_1.body)('email').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('telefono').isMobilePhone("es-MX").withMessage('must be a phone number'), (0, express_validator_1.body)('mensaje').isLength({ min: 1, max: 100 }).withMessage('Need to be min 1 and max 100'), 
+/*checkJwt,*/
+function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errors = (0, express_validator_1.validationResult)(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        var conestudiante = new conEstudiante();
+        conestudiante.nombre = req.body.nombre;
+        conestudiante.apellido = req.body.apellido;
+        conestudiante.email = req.body.email;
+        conestudiante.telefono = req.body.telefono;
+        conestudiante.mensaje = req.body.mensaje;
+        try {
+            yield conestudiante.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    if (err.name == "ValidationError")
+                        res.status(400).send({ error: err.message });
+                }
+                res.status(201).send({ mensaje: "Comentario creado" });
+            });
+        }
+        catch (error) {
+            res.status(500).send({ error: error });
+        }
+    });
+}).get(/*checkJwt,*/ function (req, res) {
+    conEstudiante.find(function (err, conestudiante) {
+        if (err) {
+            res.send(err);
+        }
+        res.status(200).send(conestudiante);
+    });
+});
+router.route("/conestudiante/:id")
+    .get(/*checkJwt,*/ function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conestudiante = yield conEstudiante.findOne({ _id: req.params.id });
+            res.send(conestudiante);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Comentario doesn't exist!" });
+        }
+    });
+})
+    .put(/*checkJwt,*/ (0, express_validator_1.body)('nombre').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), (0, express_validator_1.body)('apellido').isLength({ min: 1, max: 50 }).withMessage('Need to be min 1 and max 50'), (0, express_validator_1.body)('email').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('telefono').isMobilePhone("es-MX").withMessage('must be a phone number'), (0, express_validator_1.body)('mensaje').isLength({ min: 1, max: 100 }).withMessage('Need to be min 1 and max 100'), function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conestudiante = yield conEstudiante.findOne({ _id: req.params.id });
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            if (req.body.nombre) {
+                conestudiante.nombre = req.body.nombre;
+            }
+            if (req.body.apellido) {
+                conestudiante.apellido = req.body.apellido;
+            }
+            if (req.body.email) {
+                conestudiante.email = req.body.email;
+            }
+            if (req.body.telefono) {
+                conestudiante.telefono = req.body.telefono;
+            }
+            if (req.body.mensaje) {
+                conestudiante.mensaje = req.body.mensaje;
+            }
+            yield conestudiante.save();
+            res.send(conestudiante);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Email doesn't exist!" });
+        }
+    });
+}).delete(/*checkJwt,*/ (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield conEstudiante.deleteOne({ _id: req.params.id });
+        return res.status(204).send({ mensaje: "Comentario eliminado" });
+    }
+    catch (_c) {
+        res.status(404);
+        res.send({ error: "Comentario doesn't exist!" });
     }
 }));
 app.use("/api", router); //url base de nuestro api que tiene las rutas en el routerglobal.fetch = require('node-fetch');
