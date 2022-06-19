@@ -233,6 +233,190 @@ router.route("/profesor/:id")
         res.send({ error: "Profesor doesn't exist!" });
     }
 }));
+var conEstudiante = require("./models/conEstudiante");
+router.route('/conestudiante')
+    .post((0, express_validator_1.body)('nombre').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), (0, express_validator_1.body)('apellido').isLength({ min: 1, max: 50 }).withMessage('Need to be min 1 and max 50'), (0, express_validator_1.body)('email').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('telefono').isMobilePhone("es-MX").withMessage('must be a phone number'), (0, express_validator_1.body)('mensaje').isLength({ min: 1, max: 100 }).withMessage('Need to be min 1 and max 100'), 
+/*checkJwt,*/
+function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errors = (0, express_validator_1.validationResult)(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        var conestudiante = new conEstudiante();
+        conestudiante.nombre = req.body.nombre;
+        conestudiante.apellido = req.body.apellido;
+        conestudiante.email = req.body.email;
+        conestudiante.telefono = req.body.telefono;
+        conestudiante.mensaje = req.body.mensaje;
+        try {
+            yield conestudiante.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    if (err.name == "ValidationError")
+                        res.status(400).send({ error: err.message });
+                }
+                res.status(201).send({ mensaje: "Comentario creado" });
+            });
+        }
+        catch (error) {
+            res.status(500).send({ error: error });
+        }
+    });
+}).get(/*checkJwt,*/ function (req, res) {
+    conEstudiante.find(function (err, conestudiante) {
+        if (err) {
+            res.send(err);
+        }
+        res.status(200).send(conestudiante);
+    });
+});
+router.route("/conestudiante/:id")
+    .get(/*checkJwt,*/ function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conestudiante = yield conEstudiante.findOne({ _id: req.params.id });
+            res.send(conestudiante);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Comentario doesn't exist!" });
+        }
+    });
+})
+    .put(/*checkJwt,*/ (0, express_validator_1.body)('nombre').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), (0, express_validator_1.body)('apellido').isLength({ min: 1, max: 50 }).withMessage('Need to be min 1 and max 50'), (0, express_validator_1.body)('email').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('telefono').isMobilePhone("es-MX").withMessage('must be a phone number'), (0, express_validator_1.body)('mensaje').isLength({ min: 1, max: 100 }).withMessage('Need to be min 1 and max 100'), function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conestudiante = yield conEstudiante.findOne({ _id: req.params.id });
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            if (req.body.nombre) {
+                conestudiante.nombre = req.body.nombre;
+            }
+            if (req.body.apellido) {
+                conestudiante.apellido = req.body.apellido;
+            }
+            if (req.body.email) {
+                conestudiante.email = req.body.email;
+            }
+            if (req.body.telefono) {
+                conestudiante.telefono = req.body.telefono;
+            }
+            if (req.body.mensaje) {
+                conestudiante.mensaje = req.body.mensaje;
+            }
+            yield conestudiante.save();
+            res.send(conestudiante);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Email doesn't exist!" });
+        }
+    });
+}).delete(/*checkJwt,*/ (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield conEstudiante.deleteOne({ _id: req.params.id });
+        return res.status(204).send({ mensaje: "Comentario eliminado" });
+    }
+    catch (_c) {
+        res.status(404);
+        res.send({ error: "Comentario doesn't exist!" });
+    }
+}));
+var conProfesor = require("./models/conProfesor");
+router.route('/conprofesor')
+    .post((0, express_validator_1.body)('nombre').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), (0, express_validator_1.body)('apellido').isLength({ min: 1, max: 50 }).withMessage('Need to be min 1 and max 50'), (0, express_validator_1.body)('email').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('telefono').isMobilePhone("es-MX").withMessage('must be a phone number'), (0, express_validator_1.body)('mensaje').isLength({ min: 1, max: 100 }).withMessage('Need to be min 1 and max 100'), 
+/*checkJwt,*/
+function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errors = (0, express_validator_1.validationResult)(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        var conprofesor = new conProfesor();
+        conprofesor.nombre = req.body.nombre;
+        conprofesor.apellido = req.body.apellido;
+        conprofesor.email = req.body.email;
+        conprofesor.telefono = req.body.telefono;
+        conprofesor.mensaje = req.body.mensaje;
+        try {
+            yield conprofesor.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    if (err.name == "ValidationError")
+                        res.status(400).send({ error: err.message });
+                }
+                res.status(201).send({ mensaje: "Comentario creado" });
+            });
+        }
+        catch (error) {
+            res.status(500).send({ error: error });
+        }
+    });
+}).get(/*checkJwt,*/ function (req, res) {
+    conProfesor.find(function (err, conprofesor) {
+        if (err) {
+            res.send(err);
+        }
+        res.status(200).send(conprofesor);
+    });
+});
+router.route("/conprofesor/:id")
+    .get(/*checkJwt,*/ function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conprofesor = yield conEstudiante.findOne({ _id: req.params.id });
+            res.send(conprofesor);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Comentario doesn't exist!" });
+        }
+    });
+})
+    .put(/*checkJwt,*/ (0, express_validator_1.body)('nombre').isLength({ min: 1, max: 20 }).withMessage('Need to be min 1 and max 20'), (0, express_validator_1.body)('apellido').isLength({ min: 1, max: 50 }).withMessage('Need to be min 1 and max 50'), (0, express_validator_1.body)('email').isEmail().withMessage('must be an email'), (0, express_validator_1.body)('telefono').isMobilePhone("es-MX").withMessage('must be a phone number'), (0, express_validator_1.body)('mensaje').isLength({ min: 1, max: 100 }).withMessage('Need to be min 1 and max 100'), function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conprofesor = yield conProfesor.findOne({ _id: req.params.id });
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            if (req.body.nombre) {
+                conprofesor.nombre = req.body.nombre;
+            }
+            if (req.body.apellido) {
+                conprofesor.apellido = req.body.apellido;
+            }
+            if (req.body.email) {
+                conprofesor.email = req.body.email;
+            }
+            if (req.body.telefono) {
+                conprofesor.telefono = req.body.telefono;
+            }
+            if (req.body.mensaje) {
+                conprofesor.mensaje = req.body.mensaje;
+            }
+            yield conprofesor.save();
+            res.send(conprofesor);
+        }
+        catch (_a) {
+            res.status(404);
+            res.send({ error: "Email doesn't exist!" });
+        }
+    });
+}).delete(/*checkJwt,*/ (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield conProfesor.deleteOne({ _id: req.params.id });
+        return res.status(204).send({ mensaje: "Comentario eliminado" });
+    }
+    catch (_d) {
+        res.status(404);
+        res.send({ error: "Comentario doesn't exist!" });
+    }
+}));
 app.use("/api", router); //url base de nuestro api que tiene las rutas en el routerglobal.fetch = require('node-fetch');
 app.listen(port); //abre el puerto de escucha
 console.log("sevidor arriba");

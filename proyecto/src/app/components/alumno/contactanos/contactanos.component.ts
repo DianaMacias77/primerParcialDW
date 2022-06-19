@@ -12,11 +12,11 @@ import { ConEstudiante } from 'src/app/modelos/con-estudiante';
 })
 export class ContactanosComponent implements OnInit {
   ContactosForm=new FormGroup({
-    nombres:new FormControl(''),
-    apellidos:new FormControl(''),
-    emails:new FormControl(''),
-    telefonos:new FormControl(''),
-    mensajes:new FormControl('')
+    nombre:new FormControl(''),
+    apellido:new FormControl(''),
+    email:new FormControl(''),
+    telefono:new FormControl(''),
+    mensaje:new FormControl('')
 
   })
   datos:any;
@@ -24,18 +24,20 @@ export class ContactanosComponent implements OnInit {
 
   ngOnInit(): void {
     this.servicioService.imprimirdatos();
-    this.servicioService.getdatos().subscribe(data =>
+    this.servicioService.getdatosE().subscribe(data =>
       {this.datos=data;},(err:HttpErrorResponse)=>{
         if(err.error instanceof Error){
-          console.log("problema del cliente");
+          console.log("problema del cliente")
         }
         else{
-          console.log("problema del servicio");
+          console.log("problema del servidor")
         }
-      });
+      }
+      );
   }
   submit(){
     console.warn(this.ContactosForm.value);
+    this.servicioService.createDatoE(this.ContactosForm.value).subscribe(data=>{this.datos=data;});
   }
   /* direccion(){
     this.ContactosForm.reset();

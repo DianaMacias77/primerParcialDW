@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { ChartModule } from 'smart-webcomponents-angular/chart';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/profesor/navbar/navbar.component';
@@ -30,6 +31,7 @@ import { LogoutButtonComponent } from './components/logout-button/logout-button.
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
 import { ContactanosProfesorComponent } from './components/profesor/contactanos-profesor/contactanos-profesor.component';
+import { NoticiasComponent } from './components/profesor/noticias/noticias.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { ContactanosProfesorComponent } from './components/profesor/contactanos-
     AlumnoComponent,
     ProfesorComponent,
     ContactanosComponent,
-    ContactanosProfesorComponent
+    ContactanosProfesorComponent,
+    NoticiasComponent
   ],
   imports: [
     BrowserModule,
