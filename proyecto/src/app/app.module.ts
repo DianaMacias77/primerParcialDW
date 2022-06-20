@@ -31,6 +31,7 @@ import { LogoutButtonComponent } from './components/logout-button/logout-button.
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
 import { NoticiasComponent } from './components/profesor/noticias/noticias.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NoticiasComponent } from './components/profesor/noticias/noticias.compo
     AlumnoComponent,
     ProfesorComponent,
     ContactanosComponent,
-    NoticiasComponent
+    NoticiasComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,

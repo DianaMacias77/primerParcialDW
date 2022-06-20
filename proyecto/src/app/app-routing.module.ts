@@ -14,6 +14,7 @@ import { AdministradorComponent } from './components/administrador/administrador
 import { AlumnoComponent } from './components/alumno/alumno/alumno.component';
 import { ProfesorComponent } from './components/profesor/profesor/profesor.component';
 import { NoticiasComponent } from './components/profesor/noticias/noticias.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 const routes: Routes = [
   { path: 'app-index', component: IndexComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'publicaciones-profesor', component: PublicacionesProfesorComponent},
       { path: 'contactanos', component: ContactanosComponent},
       { path: 'noticias',component:NoticiasComponent},
+      { path: 'English', component: ContactUsComponent},
       { path: '', component: InicioProfesorComponent}
     ]},
   { path: 'alumno', component:AlumnoComponent,canActivate: [AuthGuard],
@@ -32,6 +34,7 @@ const routes: Routes = [
       { path: 'inicio-estudiante', component: InicioEstudiantesComponent,data: { animation: 'InicioEs' }},
       { path: 'publicaciones-estudiante', component: PublicacionesEstudianteComponent,data: { animation: 'PublicaEs' }},
       { path: 'contactanos', component: ContactanosComponent},
+      { path: 'English', component: ContactUsComponent},
       { path: '', component: InicioEstudiantesComponent}
     ]},
   { path: 'administrador', component: AdministradorComponent},
